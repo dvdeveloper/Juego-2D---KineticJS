@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'/>
+	<title>Demo Juego 2D + KineticJS + HTML5</title>
+	
+	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+
+    <style>
+    	html, body{ height: 100% !important; min-height: 900px; }
+    	body{ 
+    		font-family: 'Roboto Condensed', sans-serif !important; 
+    		background-image: -webkit-gradient(
+				linear,
+				left top,
+				left bottom,
+				color-stop(0, #A8A3A3),
+				color-stop(1, #114040)
+			);
+			background-image: -o-linear-gradient(bottom, #A8A3A3 0%, #114040 100%);
+			background-image: -moz-linear-gradient(bottom, #A8A3A3 0%, #114040 100%);
+			background-image: -webkit-linear-gradient(bottom, #A8A3A3 0%, #114040 100%);
+			background-image: -ms-linear-gradient(bottom, #A8A3A3 0%, #114040 100%);
+			background-image: linear-gradient(to bottom, #A8A3A3 0%, #114040 100%);
+    	}
+    	/*#plataforma{ width: 960px; display: block; margin: auto; margin-top: 40px; }*/
+    	.titulo{ text-align: center; margin-top: 80px; color: #FFF; margin-bottom: 20px; }
+    	.html5{ width: 100px; }
+    	.text-center{ text-align: center; }
+    	.des_icon img{ width: 100px; margin-bottom: 30px; }
+    	.descripcion{ margin-top: 20px; }
+    	.descripcion h3{ border-bottom: 1px solid #CCC; display: block; padding-bottom: 10px; margin-bottom: 30px; }
+    	canvas{ margin-left: -480px !important; }
+    	footer{ color: #FFF; }
+
+    </style>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			
+			limpiar();
+
+			$(".comenzar").on('click',function(){
+				$("#inicio").hide();
+				document.getElementById("plataforma").focus();
+				document.getElementById("plataforma").style.display = "block";
+				limpiar();
+				configuracion();
+				PrimerNivel();
+			});
+
+			$(".inicio").on('click',function(){
+				limpiar();
+				document.getElementById("plataforma").style.display = "none";
+				document.getElementById("plataforma").innerHTML = "";
+				document.getElementById("inicio").style.display = "block";
+			})
+
+		});
+
+		function limpiar(){
+			document.getElementById("lose").style.display 	= "none";
+			document.getElementById("win").style.display 	= "none";
+		}
+
+	</script>
+</head>
+<body>
+
+
+	<div class="container"/>
+		<h1 class="titulo">Demo Juego 2D + KineticJS <img class="html5" src="imagenes/html5.png"></h1>
+		<div class="jumbotron text-center">
+	       	
+	       	<div id="inicio">
+		        <p>Juego desarrollado con la librería <a href="http://kineticjs.com/">kineticJS</a>, el código fuente lo puedes descargar en la siguiente dirección. <a href="https://github.com/dvdeveloper">Github </a> </p>
+		        <p>
+		          <a role="button" href="#comenzar" class="comenzar btn btn-lg btn-primary">Comenzar »</a>
+		        </p>
+
+		        <div class="descripcion">
+		        	<h3> [W] Saltar, [A] Izquierda, [D] Derecha (mover) </h3>
+		        </div>
+
+		        <div class="descripcion">
+			        <h3>Debes derrotar al enemigo</h3>
+			        <div class="row main-info"> 
+			        	<div class="col-md-4"> 
+			        		<div class="thumbnail"> 
+			        			<div class="caption text-center"> <div class="des_icon"><img src="enemigo.png"></div> 
+
+			        			<p class="text-center">
+			        				Debes pisarlo para matarlo, te da puntos extras
+			        			</p> 
+			        			</div> 
+			        		</div> 
+			        	</div> 
+			        	<div class="col-md-4"> 
+			        		<div class="thumbnail"> 
+			        			<div class="caption text-center"> <div class="des_icon"><img src="imagenes/enemigo_duro.png"></div> 
+			        			<br/> 
+
+
+			        			<p class="text-center">
+			        				Un dios que es indestructible, no trates de acércate a él.
+			        			</p> 
+			        			</div> 
+			        		</div> 
+			        	</div> 
+			        	<div class="col-md-4"> 
+			        		<div class="thumbnail"> 
+			        			<div class="caption text-center"> <div class="des_icon"><img src="imagenes/jefeUno.png"></div> 
+			        			
+			        			<p class="text-center">
+			        				El jefe de todos, ten cuidado que tiene la habilidad de disparar!
+			        			</p> 
+			        			</div> 
+			        		</div> 
+			        	</div> 
+			        </div>
+			    </div>
+			</div>
+			<div id="plataforma"></div>
+			
+			<div id="lose">
+				<h1>Perdiste!</h1>
+				<p>Tu puntaje fue de: <span id="page_puntaje"></span> </p>
+				<a role="button" href="#comenzar" class="comenzar btn btn-lg btn-primary">Jugar Denuevo »</a> <a role="button" href="#inicio" class="inicio btn btn-lg btn-primary"> Inicio »</a>
+			</div>
+
+			<div id="win">
+				<h1>Ganaste!</h1>
+				<p>Tu puntaje fue de: <span id="page_puntaje_win"></span> </p>
+				<a role="button" href="#comenzar" class="inicio btn btn-lg btn-primary">Jugar Denuevo »</a> <a role="button" href="#inicio" class="comenzar btn btn-lg btn-primary"> Inicio »</a>
+			</div>
+
+      </div>
+      <footer>By DvDeveloper. <a href="https://github.com/dvdeveloper">Github</a>  </footer>
+	</div>
+
+
+	<script type="text/javascript" src="preload	js-0.1.0.min.js"></script>
+	<script type="text/javascript" src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.3.2.js"></script>
+	<script type="text/javascript" src="js/plataforma.js"></script>
+	<script type="text/javascript" src="js/Personaje.js"></script>
+	<script type="text/javascript" src="js/Enemigos.js"></script>
+	<script type="text/javascript" src="js/EnemigosDuros.js"></script>
+	<script type="text/javascript" src="js/Gema.js"></script>
+	<script type="text/javascript" src="js/Trampolin.js"></script>
+	<script type="text/javascript" src="js/JefeUno.js"></script>
+	<script type="text/javascript" src="js/Bala.js"></script>
+	<script type="text/javascript" src="js/Portal.js"></script>
+	<script type="text/javascript" src="js/main.js"></script> 
+
+	<script type="text/javascript">
+		var Preloader;
+		var imgs = ['background.png','enemigo.png','imagenes/caja.png','imagenes/flotante.png','imagenes/piso.png','imagenes/bloque.png'];
+			window.addEventListener('load',function(){
+			Preloader = new PreloadJS();
+			Preloader.onProgress = ProgresoCarga;
+			//cargar();
+			//nivelUno();
+			
+
+		});
+
+		function cargar(){
+			while(imgs.length > 0){
+				var url = imgs.shift(); //metodo arreglo que saca y elimina el ultimo elemento
+				Preloader.loadFile(url);
+			}
+		}
+
+		function ProgresoCarga(){
+			if(Preloader.progress == 1){
+				//nivelUno();
+			}
+		}
+
+	</script>
+
+</body>
+</html>
