@@ -1,79 +1,187 @@
 <!DOCTYPE html>
 <html>
+<head>
+	<meta charset='utf-8'/>
+	<title>Demo Juego 2D + KineticJS + HTML5</title>
+	
+	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Juego-2d---kineticjs : Juego 2D + KineticJS" />
+    <style>
+    	html, body{ height: 100% !important; min-height: 900px; }
+    	body{ 
+    		font-family: 'Roboto Condensed', sans-serif !important; 
+    		background-image: -webkit-gradient(
+				linear,
+				left top,
+				left bottom,
+				color-stop(0, #A8A3A3),
+				color-stop(1, #114040)
+			);
+			background-image: -o-linear-gradient(bottom, #A8A3A3 0%, #114040 100%);
+			background-image: -moz-linear-gradient(bottom, #A8A3A3 0%, #114040 100%);
+			background-image: -webkit-linear-gradient(bottom, #A8A3A3 0%, #114040 100%);
+			background-image: -ms-linear-gradient(bottom, #A8A3A3 0%, #114040 100%);
+			background-image: linear-gradient(to bottom, #A8A3A3 0%, #114040 100%);
+    	}
+    	/*#plataforma{ width: 960px; display: block; margin: auto; margin-top: 40px; }*/
+    	.titulo{ text-align: center; margin-top: 80px; color: #FFF; margin-bottom: 20px; }
+    	.html5{ width: 100px; }
+    	.text-center{ text-align: center; }
+    	.des_icon img{ width: 100px; margin-bottom: 30px; }
+    	.descripcion{ margin-top: 20px; }
+    	.descripcion h3{ border-bottom: 1px solid #CCC; display: block; padding-bottom: 10px; margin-bottom: 30px; }
+    	canvas{ margin-left: -480px !important; }
+    	footer{ color: #FFF; }
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    </style>
 
-    <title>Juego-2d---kineticjs</title>
-  </head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			
+			limpiar();
 
-  <body>
+			$(".comenzar").on('click',function(){
+				$("#inicio").hide();
+				document.getElementById("plataforma").focus();
+				document.getElementById("plataforma").style.display = "block";
+				limpiar();
+				configuracion();
+				PrimerNivel();
+			});
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/dvdeveloper/Juego-2D---KineticJS">View on GitHub</a>
+			$(".inicio").on('click',function(){
+				limpiar();
+				document.getElementById("plataforma").style.display = "none";
+				document.getElementById("plataforma").innerHTML = "";
+				document.getElementById("inicio").style.display = "block";
+			})
 
-          <h1 id="project_title">Juego-2d---kineticjs</h1>
-          <h2 id="project_tagline">Juego 2D + KineticJS</h2>
+		});
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/dvdeveloper/Juego-2D---KineticJS/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/dvdeveloper/Juego-2D---KineticJS/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
+		function limpiar(){
+			document.getElementById("lose").style.display 	= "none";
+			document.getElementById("win").style.display 	= "none";
+		}
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+	</script>
+</head>
+<body>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+	<div class="container"/>
+		<h1 class="titulo">Demo Juego 2D + KineticJS <img class="html5" src="imagenes/html5.png"></h1>
+		<div class="jumbotron text-center">
+	       	
+	       	<div id="inicio">
+		        <p>Juego desarrollado con la librería <a href="http://kineticjs.com/">kineticJS</a>, el código fuente lo puedes descargar en la siguiente dirección. <a href="https://github.com/dvdeveloper">Github </a> </p>
+		        <p>
+		          <a role="button" href="#comenzar" class="comenzar btn btn-lg btn-primary">Comenzar »</a>
+		        </p>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+		        <div class="descripcion">
+		        	<h3> [W] Saltar, [A] Izquierda, [D] Derecha (mover) </h3>
+		        </div>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+		        <div class="descripcion">
+			        <h3>Debes derrotar al enemigo</h3>
+			        <div class="row main-info"> 
+			        	<div class="col-md-4"> 
+			        		<div class="thumbnail"> 
+			        			<div class="caption text-center"> <div class="des_icon"><img src="enemigo.png"></div> 
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+			        			<p class="text-center">
+			        				Debes pisarlo para matarlo, te da puntos extras
+			        			</p> 
+			        			</div> 
+			        		</div> 
+			        	</div> 
+			        	<div class="col-md-4"> 
+			        		<div class="thumbnail"> 
+			        			<div class="caption text-center"> <div class="des_icon"><img src="imagenes/enemigo_duro.png"></div> 
+			        			<br/> 
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+			        			<p class="text-center">
+			        				Un dios que es indestructible, no trates de acércate a él.
+			        			</p> 
+			        			</div> 
+			        		</div> 
+			        	</div> 
+			        	<div class="col-md-4"> 
+			        		<div class="thumbnail"> 
+			        			<div class="caption text-center"> <div class="des_icon"><img src="imagenes/jefeUno.png"></div> 
+			        			
+			        			<p class="text-center">
+			        				El jefe de todos, ten cuidado que tiene la habilidad de disparar!
+			        			</p> 
+			        			</div> 
+			        		</div> 
+			        	</div> 
+			        </div>
+			    </div>
+			</div>
+			<div id="plataforma"></div>
+			
+			<div id="lose">
+				<h1>Perdiste!</h1>
+				<p>Tu puntaje fue de: <span id="page_puntaje"></span> </p>
+				<a role="button" href="#comenzar" class="comenzar btn btn-lg btn-primary">Jugar Denuevo »</a> <a role="button" href="#inicio" class="inicio btn btn-lg btn-primary"> Inicio »</a>
+			</div>
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+			<div id="win">
+				<h1>Ganaste!</h1>
+				<p>Tu puntaje fue de: <span id="page_puntaje_win"></span> </p>
+				<a role="button" href="#comenzar" class="inicio btn btn-lg btn-primary">Jugar Denuevo »</a> <a role="button" href="#inicio" class="comenzar btn btn-lg btn-primary"> Inicio »</a>
+			</div>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+      </div>
+      <footer>By DvDeveloper. <a href="https://github.com/dvdeveloper">Github</a>  </footer>
+	</div>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
+	<script type="text/javascript" src="preload	js-0.1.0.min.js"></script>
+	<script type="text/javascript" src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.3.2.js"></script>
+	<script type="text/javascript" src="js/plataforma.js"></script>
+	<script type="text/javascript" src="js/Personaje.js"></script>
+	<script type="text/javascript" src="js/Enemigos.js"></script>
+	<script type="text/javascript" src="js/EnemigosDuros.js"></script>
+	<script type="text/javascript" src="js/Gema.js"></script>
+	<script type="text/javascript" src="js/Trampolin.js"></script>
+	<script type="text/javascript" src="js/JefeUno.js"></script>
+	<script type="text/javascript" src="js/Bala.js"></script>
+	<script type="text/javascript" src="js/Portal.js"></script>
+	<script type="text/javascript" src="js/main.js"></script> 
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Juego-2d---kineticjs maintained by <a href="https://github.com/dvdeveloper">dvdeveloper</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
+	<script type="text/javascript">
+		var Preloader;
+		var imgs = ['background.png','enemigo.png','imagenes/caja.png','imagenes/flotante.png','imagenes/piso.png','imagenes/bloque.png'];
+			window.addEventListener('load',function(){
+			Preloader = new PreloadJS();
+			Preloader.onProgress = ProgresoCarga;
+			//cargar();
+			//nivelUno();
+			
 
-    
+		});
 
-  </body>
+		function cargar(){
+			while(imgs.length > 0){
+				var url = imgs.shift(); //metodo arreglo que saca y elimina el ultimo elemento
+				Preloader.loadFile(url);
+			}
+		}
+
+		function ProgresoCarga(){
+			if(Preloader.progress == 1){
+				//nivelUno();
+			}
+		}
+
+	</script>
+
+</body>
 </html>
