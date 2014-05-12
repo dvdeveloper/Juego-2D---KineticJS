@@ -456,7 +456,7 @@ function Perdiste(){
 	var canvas = document.getElementById('plataforma');
 	canvas.style.display = 'none';
 	document.getElementById("lose").style.display = "block";
-	HTMLPuntaje();
+	HTMLPuntaje("page_puntaje");
 	canvas.innerHTML = "";
 	
 }
@@ -467,12 +467,12 @@ function Ganaste(){
 	var canvas = document.getElementById('plataforma');
 	canvas.style.display = 'none';
 	document.getElementById("win").style.display = "block";
-	HTMLPuntaje();
+	HTMLPuntaje("page_puntaje_win");
 	canvas.innerHTML = "";
 }
 
-function HTMLPuntaje(){
-	document.getElementById("page_puntaje").innerHTML = juego.puntaje_gemas + juego.puntaje_enemigos;
+function HTMLPuntaje(etiqueta){
+	document.getElementById(etiqueta).innerHTML = juego.puntaje_gemas + juego.puntaje_enemigos;
 }
 
 function detenerJuego(){
