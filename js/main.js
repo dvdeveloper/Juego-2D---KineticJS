@@ -143,8 +143,8 @@ function PrimerNivel(){
 	/*Enemigos*/
 	grupoEnemigos.add(new Enemigos(20,stage.getHeight()/1.5,imgEnemigo));
 	grupoEnemigos.add(new Enemigos(690,stage.getHeight()/2,imgEnemigo));
-	grupoEnemigos.add(new Enemigos(700,400,imgEnemigo));
-	grupoEnemigos.add(new Enemigos(760,400,imgEnemigo));
+	//grupoEnemigos.add(new Enemigos(700,400,imgEnemigo));
+	//grupoEnemigos.add(new Enemigos(760,400,imgEnemigo));
 	grupoEnemigos.add(new Enemigos(400,500,imgEnemigo));
 	
 	/*JEFE*/

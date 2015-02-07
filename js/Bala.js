@@ -2,7 +2,7 @@ function Bala(x,y,obj_sprite){
 	
 	Kinetic.Circle.call(this); 
 	
-	var attackSpeed = 15;
+	var attackSpeed = 10;
 	var b_x = obj_sprite.getX()+(obj_sprite.getWidth()/2);
 	var b_y = obj_sprite.getY()+(obj_sprite.getHeight()/2);
 
